@@ -10,8 +10,6 @@ const Home = () => {
 	//Delete from array -> filter
 	//Update -> map
 
-
-
 	return (
 		<div className="container">
 			<h1>My Todos</h1>
@@ -27,7 +25,7 @@ const Home = () => {
 								setInputValue("");
 							}
 						}}
-						placeholder="what do you need to do?"></input><i class="fa-solid fa-trash-can" display="block"></i>
+						placeholder="What do you need to do?"></input><i class="fa-solid fa-trash-can"></i>
 				</li>
 
 				{todos.map((item, index) => (
@@ -48,7 +46,7 @@ const Home = () => {
 				
 				
 			</ul>
-			<div>{todos.length} tasks</div>
+			<div>{todos.length} Tasks</div>
 		</div>
 	);
 };
