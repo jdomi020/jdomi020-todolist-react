@@ -46,7 +46,7 @@ const Home = () => {
 				
 				
 			</ul>
-			<div>{todos.length} Tasks</div>
+			<div className="tasks">{todos.length} Tasks</div>
 		</div>
 	);
 };
