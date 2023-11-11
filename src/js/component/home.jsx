@@ -11,6 +11,7 @@ const Home = () => {
 	//Update -> map
 
 
+
 	return (
 		<div className="container">
 			<h1>My Todos</h1>
@@ -26,7 +27,7 @@ const Home = () => {
 								setInputValue("");
 							}
 						}}
-						placeholder="what do you need to do?"></input><i class="fa-solid fa-trash-can"></i>
+						placeholder="what do you need to do?"></input><i class="fa-solid fa-trash-can" display="block"></i>
 				</li>
 
 				{todos.map((item, index) => (

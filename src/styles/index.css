@@ -10,9 +10,18 @@
     import 'relative/path/to/stylesheet.scss';
 
 */
+i {
+    /* display: inline-block;
+    float: right;
+    position: absolute;
+    margin-bottom: 3px;
+    margin-right: 10px;
+    text-align: center; */
+}
 
 body{
     margin-top: 100px;
+    background: gray;
 }
 
 ul{
