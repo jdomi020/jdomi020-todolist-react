@@ -8,18 +8,18 @@ const Home = () => {
 
 	// This is where I'm allegedly creating my username in the API
 
-	useEffect (() => 
-	fetch("https://playground.4geeks/apis/fake/todos/user/", {
+	useEffect (() => (
+	fetch("https://playground.4geeks.com/apis/fake/todos/user/", {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json"
 		}
 	})
-	.then(resp => {
-		console.log(resp.ok);
-		console.log(resp.status);
-		console.log(resp.text());
-		return resp.json();
+	.then(response => response.json()) {
+		// console.log(resp.ok);
+		// console.log(resp.status);
+		// console.log(resp.text());
+		// return resp.json();
 	})
 	.then(data => {
 		setTodos(data);
@@ -27,32 +27,52 @@ const Home = () => {
 	.catch(error => {
 		console.log(error)
 	})
-	, []);
+	, []));
 	
+	// This is where I post my username to the API site
+
+	// 
+	
+	function addItem(newItem) {
+			let newTodo = [...items, {label:newItem, done:false}];
+			fetch("https://playground.4geeks.com/apis/fake/todos/user/jdomi020", {
+				method: "PUT",
+				headers: {"Content-Type": "application/json",},
+				body: JSON.stringify(newTodo)
+			})
+			.then(response => {
+				if(!response.ok) throw Error (response.statusText);
+				return response.json();
+			})
+			.then(response => {
+				setTodos(newTodo)
+			})
+			.catch(error => console.log(error))
+	}
 
 	// This would be where I'm putting whatever comes up in the to-list, probably in the body
 
-	useEffect (() =>
-	fetch("https://playground.4geeks/apis/fake/todos/user/jdomi020", {
-		method: "POST",
-		body: JSON.stringify({label: inputValue}),
-		headers: {
-			"Content-Type": "application/json"
-		}
-	})
-	.then(resp => resp.json ()
+	// useEffect (() =>
+	// fetch("https://playground.4geeks.com/apis/fake/todos/user/jdomi020", {
+	// 	method: "POST",
+	// 	body: JSON.stringify({label: inputValue}),
+	// 	headers: {
+	// 		"Content-Type": "application/json"
+	// 	}
+	// })
+	// .then(resp => resp.json ()
 		// console.log(resp.ok),
 		// console.log(resp.status),
 		// console.log(resp.text()),
 		// return resp.json()
-	)
-	.then(data => {
-		console.log(data);
-	})
-	.catch(error => {
-		console.log(error)
-	}) 
-	, [inputValue]);
+	// )
+	// .then(data => {
+	// 	console.log(data);
+	// })
+	// .catch(error => {
+	// 	console.log(error)
+	// }) 
+	// , [inputValue]);
 	
 
 	// and this would allegedly be where i would be deleting the things that I input
@@ -101,8 +121,8 @@ const Home = () => {
 						placeholder="What do you need to do?"></input><i class="fa-solid fa-trash-can"></i>
 				</li>
 
-				{todos.map((item, index) => (
-					<li className="todos">
+				{todos&&todos.map((item, index) => (
+					<li className="todos" key={index}>
 						{item}{""} 
 						<i 
 							class="fa-solid fa-trash-can"
