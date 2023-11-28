@@ -1,40 +1,58 @@
 import React, { useState, useEffect } from "react";
 
-
+ 
 //create your first component
 const Home = () => {
 	const [inputValue, setInputValue] = useState("");
+	const [userName, setuserName] = useState("")
 	const [todos, setTodos] = useState([]);
 
 	// This is where I'm allegedly creating my username in the API
-
-	useEffect (() => (
-	fetch("https://playground.4geeks.com/apis/fake/todos/user/", {
-		method: "GET",
-		headers: {
-			"Content-Type": "application/json"
-		}
-	})
-	.then(response => response.json()) {
-		// console.log(resp.ok);
-		// console.log(resp.status);
-		// console.log(resp.text());
-		// return resp.json();
-	})
-	.then(data => {
-		setTodos(data);
-	})
-	.catch(error => {
-		console.log(error)
-	})
-	, []));
+	useEffect (async () => {
+		const fetchUsername = async() =>{
+			fetch(`https://playground.4geeks.com/apis/fake/todos/user/jdomi020`, {
+			method: "GET",
+			headers: {
+				"Content-Type": "application/json"
+			}
+		})
+		.then(response => response.json())
 	
+		.then(data => {
+			console.log(data);
+			setTodos(data);
+			console.log(todos);
+		})
+		.catch(error => {
+			console.log(error)
+		})
+		}
+	// 	setuserName("jdomi020");
+	// fetch(`https://playground.4geeks.com/apis/fake/todos/user/jdomi020`, {
+	// 	method: "POST",
+	// 	headers: {
+	// 		"Content-Type": "application/json"
+	// 	},
+	// 	body: JSON.stringify([])
+	// })
+	// .then(response => {
+		
+	// 	if (response.ok){
+	// 		console.log("response went through")
+	// 	}
+	// 	return response.json()
+	// })
+		
+	await fetchUsername();
+	console.log(todos);
+	},[]);
+
 	// This is where I post my username to the API site
 
 	// 
 	
 	function addItem(newItem) {
-			let newTodo = [...items, {label:newItem, done:false}];
+			let newTodo = [...todos, {"label":newItem , "done": false}];
 			fetch("https://playground.4geeks.com/apis/fake/todos/user/jdomi020", {
 				method: "PUT",
 				headers: {"Content-Type": "application/json",},
@@ -42,10 +60,9 @@ const Home = () => {
 			})
 			.then(response => {
 				if(!response.ok) throw Error (response.statusText);
-				return response.json();
-			})
-			.then(response => {
 				setTodos(newTodo)
+				setInputValue("");
+				return response.json();
 			})
 			.catch(error => console.log(error))
 	}
@@ -113,19 +130,16 @@ const Home = () => {
 						onChange={(e) => setInputValue(e.target.value)}
 						value={inputValue}
 						onKeyDown={(e) => {
-							if(e.key === "Enter") {
-						 		setTodos(todos.concat([inputValue]));
-								setInputValue("");
-							}
+							if(e.key === "Enter")addItem();
 						}}
-						placeholder="What do you need to do?"></input><i class="fa-solid fa-trash-can"></i>
+						placeholder="What do you need to do?"></input><i className="fa-solid fa-trash-can"></i>
 				</li>
 
-				{todos&&todos.map((item, index) => (
+				{todos.map((item, index) => (
 					<li className="todos" key={index}>
-						{item}{""} 
+						{item.label}{""} 
 						<i 
-							class="fa-solid fa-trash-can"
+							className="fa-solid fa-trash-can"
 							onClick ={() =>
 								setTodos(
 									todos.filter(
@@ -136,7 +150,7 @@ const Home = () => {
 							}></i>
 					</li>
 				))}
-				
+				{console.log(todos)}
 				
 			</ul>
 			<div className="tasks">{todos.length} Tasks</div>
