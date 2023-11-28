@@ -52,16 +52,18 @@ const Home = () => {
 	// 
 	
 	function addItem(newItem) {
-			let newTodo = [...todos, {"label":newItem , "done": false}];
+			let newTodo = [...todos, newItem.label];
 			fetch("https://playground.4geeks.com/apis/fake/todos/user/jdomi020", {
 				method: "PUT",
 				headers: {"Content-Type": "application/json",},
 				body: JSON.stringify(newTodo)
 			})
 			.then(response => {
-				if(!response.ok) throw Error (response.statusText);
-				setTodos(newTodo)
-				setInputValue("");
+				if(!response.ok) throw Error (response.statusText)
+					else{setTodos(newTodo)
+						setInputValue("")};
+				console.log(newTodo, "newest log");
+
 				return response.json();
 			})
 			.catch(error => console.log(error))
@@ -130,7 +132,8 @@ const Home = () => {
 						onChange={(e) => setInputValue(e.target.value)}
 						value={inputValue}
 						onKeyDown={(e) => {
-							if(e.key === "Enter")addItem();
+							if(e.key === "Enter")
+							{addItem()}
 						}}
 						placeholder="What do you need to do?"></input><i className="fa-solid fa-trash-can"></i>
 				</li>
@@ -150,7 +153,6 @@ const Home = () => {
 							}></i>
 					</li>
 				))}
-				{console.log(todos)}
 				
 			</ul>
 			<div className="tasks">{todos.length} Tasks</div>
