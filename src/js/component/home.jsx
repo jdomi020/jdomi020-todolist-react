@@ -56,7 +56,7 @@ const Home = () => {
 			fetch("https://playground.4geeks.com/apis/fake/todos/user/jdomi020", {
 				method: "PUT",
 				headers: {"Content-Type": "application/json",},
-				body: JSON.stringify(todos)
+				body: JSON.stringify(newTodo)
 			})
 			.then(response => {
 				if(!response.ok) throw Error (response.statusText)
@@ -69,55 +69,44 @@ const Home = () => {
 			.catch(error => console.log(error))
 	}
 
-	// This would be where I'm putting whatever comes up in the to-list, probably in the body
+	function deleteItem() {
+		let deleteTodo = todos = [ {label: inputValue, done: false}];
+		console.log(deleteTodo);
+		fetch("https://playground.4geeks.com/apis/fake/todos/user/jdomi020", {
+			method: "PUT",
+			headers: {"Content-Type": "application/json",},
+			body: JSON.stringify(deleteTodo)
+		})
+		.then(response => {
+			if(!response.ok) throw Error (response.statusText)
+				else{setTodos(deleteTodo)
+					setInputValue("")};
+			console.log(deleteTodo, "newest log");
 
-	// useEffect (() =>
-	// fetch("https://playground.4geeks.com/apis/fake/todos/user/jdomi020", {
-	// 	method: "POST",
-	// 	body: JSON.stringify({label: inputValue}),
-	// 	headers: {
-	// 		"Content-Type": "application/json"
-	// 	}
-	// })
-	// .then(resp => resp.json ()
-		// console.log(resp.ok),
-		// console.log(resp.status),
-		// console.log(resp.text()),
-		// return resp.json()
-	// )
-	// .then(data => {
-	// 	console.log(data);
-	// })
-	// .catch(error => {
-	// 	console.log(error)
-	// }) 
-	// , [inputValue]);
-	
+			return response.json();
+		})
+		.catch(error => console.log(error))
+}
 
-	// and this would allegedly be where i would be deleting the things that I input
-	
-	// useEffect (() => 
-	// fetch("https://playground.4geeks/apis/fake/todos/user/jdomi020", {
-	// 	method: "DELETE",
-	// 	body: [],
-	// 	headers: {
-	// 		"Content-Type": "application/json"
-	// 	}
-	// })
-	// .then(resp => {
-	// 	console.log(resp.ok);
-	// 	console.log(resp.status);
-	// 	console.log(resp.text());
-	// 	return resp.json();
-	// })
-	// .then(data => {
-	// 	console.log(data);
-	// })
-	// .catch(error => {
-	// 	console.log(error)
-	// })
-	// ,[]);
- 
+
+function deleteItem2(index) {
+	const updatedTodos = [...todos];
+	updatedTodos.splice(index, 1);
+	fetch("https://playground.4geeks.com/apis/fake/todos/user/jdomi020", {
+	  method: "PUT",
+	  headers: { "Content-Type": "application/json" },
+	  body: JSON.stringify(updatedTodos),
+	})
+	  .then((response) => {
+		if (!response.ok) throw Error(response.statusText);
+		setTodos(updatedTodos);
+		console.log(updatedTodos);
+		return response.json();
+	  })
+	  .catch((error) => console.log(error));
+  }
+
+  
 	//Add into array -> concat
 	//Delete from array -> filter
 	//Update -> map
@@ -141,16 +130,15 @@ const Home = () => {
 				{todos.map((item, index) => (
 					<li className="todos" key={index}>
 						{item.label}{""} 
-						<i 
+						<button ><i 
+							onClick = 
+							{()=> deleteItem2(index)} 
 							className="fa-solid fa-trash-can"
-							onClick ={() =>
-								setTodos(
-									todos.filter(
-										(t, currentIndex) =>
-											 index != currentIndex
-									)
-								)
-							}></i>
+							
+									// todos.filter(
+									// 	(t, currentIndex) =>
+									// 		 index != currentIndex
+							></i></button>
 					</li>
 				))}
 				
