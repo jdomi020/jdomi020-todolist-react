@@ -51,12 +51,12 @@ const Home = () => {
 
 	// 
 	
-	function addItem(newItem) {
-			let newTodo = [...todos, newItem.label];
+	function addItem() {
+			let newTodo = [...todos, {label: inputValue, done: false}];
 			fetch("https://playground.4geeks.com/apis/fake/todos/user/jdomi020", {
 				method: "PUT",
 				headers: {"Content-Type": "application/json",},
-				body: JSON.stringify(newTodo)
+				body: JSON.stringify(todos)
 			})
 			.then(response => {
 				if(!response.ok) throw Error (response.statusText)
