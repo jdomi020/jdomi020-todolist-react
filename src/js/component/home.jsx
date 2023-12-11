@@ -27,29 +27,13 @@ const Home = () => {
 			console.log(error)
 		})
 		}
-	// 	setuserName("jdomi020");
-	// fetch(`https://playground.4geeks.com/apis/fake/todos/user/jdomi020`, {
-	// 	method: "POST",
-	// 	headers: {
-	// 		"Content-Type": "application/json"
-	// 	},
-	// 	body: JSON.stringify([])
-	// })
-	// .then(response => {
-		
-	// 	if (response.ok){
-	// 		console.log("response went through")
-	// 	}
-	// 	return response.json()
-	// })
-		
+
 	await fetchUsername();
 	console.log(todos);
 	},[]);
 
-	// This is where I post my username to the API site
 
-	// 
+	// adding an Item to API
 	
 	function addItem() {
 			let newTodo = [...todos, {label: inputValue, done: false}];
@@ -69,11 +53,13 @@ const Home = () => {
 			.catch(error => console.log(error))
 	}
 
-	function deleteItem() {
+	//Delete All Items function?
+
+	function deleteAllItem() {
 		let deleteTodo = todos = [ {label: inputValue, done: false}];
 		console.log(deleteTodo);
 		fetch("https://playground.4geeks.com/apis/fake/todos/user/jdomi020", {
-			method: "PUT",
+			method: "DELETE",
 			headers: {"Content-Type": "application/json",},
 			body: JSON.stringify(deleteTodo)
 		})
@@ -88,6 +74,7 @@ const Home = () => {
 		.catch(error => console.log(error))
 }
 
+//Delete Single Item
 
 function deleteItem2(index) {
 	const updatedTodos = [...todos];
@@ -130,20 +117,20 @@ function deleteItem2(index) {
 				{todos.map((item, index) => (
 					<li className="todos" key={index}>
 						{item.label}{""} 
-						<button ><i 
+						<button
 							onClick = 
 							{()=> deleteItem2(index)} 
-							className="fa-solid fa-trash-can"
-							
-									// todos.filter(
-									// 	(t, currentIndex) =>
-									// 		 index != currentIndex
-							></i></button>
+							className="fa-solid fa-trash-can">
+							</button>
 					</li>
 				))}
 				
 			</ul>
 			<div className="tasks">{todos.length} Tasks</div>
+			<button
+				onClick = 
+				{ ()=> deleteAllItem(setTodos)}
+			>DELETE ALL</button>
 		</div>
 	);
 };
